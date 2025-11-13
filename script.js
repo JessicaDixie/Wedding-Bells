@@ -48,3 +48,45 @@ setInterval(() => {
   }
 }, 1000);
 
+// Replace YOUR_RENDER_URL with your deployed Render backend URL (e.g., https://wedding-backend.onrender.com)
+
+// RSVP Submission
+document.getElementById("rsvpBtn").addEventListener("click", async () => {
+  const name = document.getElementById("name").value;
+  const attending = document.getElementById("attending").value;
+  const plusOne = document.getElementById("plusOne").value;
+
+  if (!name || !attending || !plusOne) {
+    alert("Please fill in all fields before submitting.");
+    return;
+  }
+
+  const response = await fetch("https://wedding-bells-backend.onrender.com/api/rsvp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, attending, plusOne }),
+  });
+
+  const result = await response.json();
+  alert(result.message);
+});
+
+// Song Suggestion Submission
+document.getElementById("suggestionBtn").addEventListener("click", async () => {
+  const song = document.getElementById("songName").value;
+  const artist = document.getElementById("artistName").value;
+
+  if (!song || !artist) {
+    alert("Please fill in both song and artist fields.");
+    return;
+  }
+
+  const response = await fetch("https://wedding-bells-backend.onrender.com/api/songs", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ song, artist }),
+  });
+
+  const result = await response.json();
+  alert(result.message);
+});
