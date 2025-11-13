@@ -48,7 +48,9 @@ setInterval(() => {
   }
 }, 1000);
 
-// Replace YOUR_RENDER_URL with your deployed Render backend URL (e.g., https://wedding-backend.onrender.com)
+// Render URL
+const API_BASE = "https://wedding-bells-backend.onrender.com"
+//const LOCAL_API = "http://localhost:5000"; //for local testing
 
 // RSVP Submission
 document.getElementById("rsvpBtn").addEventListener("click", async () => {
@@ -57,18 +59,25 @@ document.getElementById("rsvpBtn").addEventListener("click", async () => {
   const plusOne = document.getElementById("plusOne").value;
 
   if (!name || !attending || !plusOne) {
-    alert("Please fill in all fields before submitting.");
+    alert("Please fill in all fields.");
     return;
   }
 
-  const response = await fetch("https://wedding-bells-backend.onrender.com/api/rsvp", {
+  try{
+    const response = await fetch(`${API_BASE}/api/rsvp`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, attending, plusOne }),
+    body: JSON.stringify({ name, attending, plusOne }), 
   });
-
-  const result = await response.json();
-  alert(result.message);
+    if(!response.ok){
+      throw new Error("Failed to submit RSVP");
+    }
+    const result = await response.json();
+    alert("RSVP saved successfully!"); 
+  }catch(err){
+    console.error(err);
+    alert("There was a problem submitting your RSVP. Please try again later.");
+  }
 });
 
 // Song Suggestion Submission
@@ -77,17 +86,22 @@ document.getElementById("suggestionBtn").addEventListener("click", async () => {
   const artist = document.getElementById("artistName").value;
 
   if (!song || !artist) {
-    alert("Please fill in both song and artist fields.");
+    alert("Please fill in both fields.");
     return;
   }
-
-  const response = await fetch("https://wedding-bells-backend.onrender.com/api/songs", {
+  try{
+    const response = await fetch(`${LOCAL_API}/api/songs`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ song, artist }),
   });
-
+  if(!response.ok){
+    throw new Error("Failed to submit song suggestion");
+  }
   const result = await response.json();
-  alert(result.message);
+  alert("Song suggestion saved successfully!");
+  }catch(err){
+    console.error(err);
+    alert("There was a problem submitting your song suggestion. Please try again later.");
+  }
 });
-
