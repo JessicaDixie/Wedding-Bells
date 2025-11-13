@@ -90,7 +90,7 @@ document.getElementById("suggestionBtn").addEventListener("click", async () => {
     return;
   }
   try{
-    const response = await fetch(`${LOCAL_API}/api/songs`, {
+    const response = await fetch(`${API_BASE}/api/songs`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ song, artist }),
