@@ -49,7 +49,7 @@ setInterval(() => {
 }, 1000);
 
 // Render URL
-const API_BASE = "https://wedding-bells-backend.onrender.com"
+//const API_BASE = "https://wedding-bells-backend.onrender.com"
 //const LOCAL_API = "http://localhost:5000"; //for local testing
 
 // RSVP Submission
@@ -64,7 +64,7 @@ document.getElementById("rsvpBtn").addEventListener("click", async () => {
   }
 
   try{
-    const response = await fetch(`${API_BASE}/api/rsvp`, {
+    const response = await fetch(`https://wedding-bells-backend.onrender.com/api/rsvp`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, attending, plusOne }), 
@@ -90,7 +90,7 @@ document.getElementById("suggestionBtn").addEventListener("click", async () => {
     return;
   }
   try{
-    const response = await fetch(`${API_BASE}/api/songs`, {
+    const response = await fetch(`https://wedding-bells-backend.onrender.com/api/songs`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ song, artist }),
