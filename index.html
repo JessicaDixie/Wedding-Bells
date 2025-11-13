@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inge & Mark's Wedding</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header>
+    You are invited to celebrate the marriage of Inge and Mark! <br />
+    17 January 2025
+  </header>
+
+  <!-- Image Gallery -->
+  <div class="row">
+  <div class="column">
+    <img src="images/img1.png" alt="Inge and Mark 1" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="images/img2.png" alt="Inge and Mark 2" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="images/img3.png" alt="Inge and Mark 3" style="width:100%">
+  </div>
+</div>
+
+  <!-- Countdown -->
+  <div class="countdown" id="countdown"></div>
+
+  <!-- Timeline -->
+<section class="timeline">
+  <h2>Wedding Day Itinerary</h2>
+  <div class="timeline-container">
+    <div class="timeline-item">
+      <div class="timeline-time">15:30 - 16:00</div>
+      <div class="timeline-details">
+        <h3>Welcome Drinks</h3>
+        <p>Cradle Valley, 12 R374, Zwartkop, Muldersdrift, 1739, South Africa</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-time">16:00 – 17:00</div>
+      <div class="timeline-details">
+        <h3>Ceremony</h3>
+        <p>Cradle Valley, 12 R374, Zwartkop, Muldersdrift, 1739, South Africa</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-time">17:00 – 23:59</div>
+      <div class="timeline-details">
+        <h3>Reception</h3>
+        <p>Cradle Valley, 12 R374, Zwartkop, Muldersdrift, 1739, South Africa</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- RSVP and Song Suggestion Container -->
+<section class="forms-container">
+  <div class="form-box rsvp">
+    <h2>RSVP</h2>
+    <input type="text" id="name" placeholder="Your Name">
+    <label>Attending?</label>
+    <select id="attending">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+    <label>Plus One?</label>
+    <select id="plusOne">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+    <button id="rsvpBtn">Submit RSVP</button>
+  </div>
+
+  <div class="form-box song-suggestion">
+    <h2>Song Suggestions</h2>
+    <input type="text" id="songName" placeholder="Song Title">
+    <input type="text" id="artistName" placeholder="Artist Name">
+    <button id="suggestionBtn">Submit Suggestion</button>
+  </div>
+</section>
+
+
+  <footer>
+    With love, Inge & Mark 💕
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
