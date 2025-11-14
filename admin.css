@@ -1,7 +1,7 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Georgia', serif;
   padding: 20px;
-  background: #f8f8f8;
+  background-color: #fffaf5;
 }
 
 h1 {
@@ -15,7 +15,7 @@ h2 {
 table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background-color: #fff2f2;
   margin-bottom: 20px;
   box-shadow: 0 0 6px rgba(0,0,0,0.1);
 }
@@ -26,5 +26,5 @@ th, td {
 }
 
 th {
-  background: #eee;
+  background-color: #f8e1e7;
 }

@@ -1,4 +1,4 @@
-// --- Image Rotation using .row and .column ---
+//Array of file strings that stores the filepaths to each image
 const galleryImages = [
   "images/img1.png",
   "images/img2.png",
@@ -8,6 +8,7 @@ const galleryImages = [
   "images/img6.jpg"
 ];
 
+//Image rotation
 let currentIndex = 0;
 const columns = document.querySelectorAll('.column img');
 
@@ -16,7 +17,7 @@ function rotateImages() {
     const imgIndex = (currentIndex + i) % galleryImages.length;
     columns[i].classList.add('fade-out');
 
-    // Delay changing the src until fade animation is done
+    // Delay change until fade animation is done
     setTimeout(() => {
       columns[i].src = galleryImages[imgIndex];
       columns[i].classList.remove('fade-out');
@@ -25,32 +26,52 @@ function rotateImages() {
   currentIndex = (currentIndex + 3) % galleryImages.length;
 }
 
-// Initial display + rotation every 10 seconds
+// Initial immages are displayed and then rotated every 10 seconds
 rotateImages();
 setInterval(rotateImages, 10000);
 
-// --- Countdown timer ---
+//Countdown timer
 const countdown = document.getElementById('countdown');
-var weddingDate = new Date('Jan 15, 2026 13:30:00').getTime();
+const weddingDate = new Date('2026-01-17T13:30:00');
 
-setInterval(() => {
-  var currentDate = new Date().getTime();
-  var timeToWeddingDate = weddingDate - currentDate;
+function updateCountdown() {
+  const now = new Date();
 
-  var months = Math.floor((timeToWeddingDate % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-  var days = Math.floor((timeToWeddingDate % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((timeToWeddingDate % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-  if (timeToWeddingDate < 0) {
-    countdown.innerHTML = "The big day has arrived!";
-  } else {
-    countdown.innerHTML = `${months} Months ${days} Days ${hours} Hours until we say I do!`;
+  if (now >= weddingDate) {
+    countdown.textContent = "The big day has arrived!";
+    return;
   }
-}, 1000);
 
-// Render URL
-//const API_BASE = "https://wedding-bells-backend.onrender.com"
-//const LOCAL_API = "http://localhost:5000"; //for local testing
+  // Create copies so we can adjust without affecting originals
+  let start = new Date(now);
+  let end = new Date(weddingDate);
+
+  // Calculate months difference
+  let months = (end.getFullYear() - start.getFullYear()) * 12 +
+               (end.getMonth() - start.getMonth());
+
+  // If the current day is greater than the wedding day, reduce one month
+  if (start.getDate() > end.getDate()) {
+    months -= 1;
+  }
+
+  // Advance start by the computed months
+  const temp = new Date(start);
+  temp.setMonth(temp.getMonth() + months);
+
+  // Get the remaining milliseconds
+  const diff = end - temp;
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+  countdown.textContent = `${months} Months ${days} Days ${hours} Hours until we say I do!`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+//const LOCAL_API = "http://localhost:5000"; //used for local testing
 
 // RSVP Submission
 document.getElementById("rsvpBtn").addEventListener("click", async () => {
@@ -63,18 +84,22 @@ document.getElementById("rsvpBtn").addEventListener("click", async () => {
     return;
   }
 
-  try{
+  try {
     const response = await fetch(`https://wedding-bells-backend.onrender.com/api/rsvp`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, attending, plusOne }), 
-  });
-    if(!response.ok){
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, attending, plusOne }),
+    });
+    if (!response.ok) {
       throw new Error("Failed to submit RSVP");
     }
     const result = await response.json();
-    alert("RSVP saved successfully!"); 
-  }catch(err){
+    alert("RSVP saved successfully!");
+    //clear RSVP input fields
+    document.getElementById("name").value = "";
+    document.getElementById("attending").value = "yes";
+    document.getElementById("plusOne").value = "yes";
+  } catch (err) {
     console.error(err);
     alert("There was a problem submitting your RSVP. Please try again later.");
   }
@@ -89,18 +114,21 @@ document.getElementById("suggestionBtn").addEventListener("click", async () => {
     alert("Please fill in both fields.");
     return;
   }
-  try{
+  try {
     const response = await fetch(`https://wedding-bells-backend.onrender.com/api/songs`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ song, artist }),
-  });
-  if(!response.ok){
-    throw new Error("Failed to submit song suggestion");
-  }
-  const result = await response.json();
-  alert("Song suggestion saved successfully!");
-  }catch(err){
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ song, artist }),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to submit song suggestion");
+    }
+    const result = await response.json();
+    alert("Song suggestion saved successfully!");
+    //clear song title and artist fields
+    document.getElementById("songName").value = "";
+    document.getElementById("artistName").value = "";
+  } catch (err) {
     console.error(err);
     alert("There was a problem submitting your song suggestion. Please try again later.");
   }
