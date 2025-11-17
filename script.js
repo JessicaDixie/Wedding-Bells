@@ -41,43 +41,47 @@ setInterval(rotateImages, 10000);
 // COUNTDOWN TIMER
 //============================================================
 
-const countdown = document.getElementById('countdown'); // DOM element where countdown text will show
-const weddingDate = new Date('2026-01-17T15:30:00'); // Wedding date and start time
+const countdown = document.getElementById('countdown');
+const weddingDate = new Date('2026-01-17T15:30:00');
 
-// Updates the countdown every second and calculates the months, days, and hours remaining
 function updateCountdown() {
-  const now = new Date();
+        const now = new Date();
+        let diff = weddingDate.getTime() - now.getTime(); // Finds the difference in milliseconds
 
-  // If the wedding date has passed display a message and stop updating the countdown
-  if (now >= weddingDate) {
-    countdown.textContent = "The big day has arrived!";
-    return;
-  }
+        //Checks if the wedding day and time has passed and stops the countdown
+        if (diff < 0) {
+            countdown.textContent = "The big day has arrived!";
+            return;
+        }
 
-  // Create date copies so we can adjust without affecting originals
-  let start = new Date(now);
-  let end = new Date(weddingDate);
+        // Initial time difference calculation of years, months, days, hours, minutes, seconds
+        // These values may be negative and, if they are, will need to be corrected
+        let years = weddingDate.getFullYear() - now.getFullYear();
+        let months = weddingDate.getMonth() - now.getMonth();
+        let days = weddingDate.getDate() - now.getDate();
+        let hours = weddingDate.getHours() - now.getHours();
+        let minutes = weddingDate.getMinutes() - now.getMinutes();
 
-  // Calculate full month difference
-  let months = (end.getFullYear() - start.getFullYear()) * 12 +
-               (end.getMonth() - start.getMonth());
-
-  // If the current day is greater than the wedding's day of the month, reduce by one month
-  if (start.getDate() > end.getDate()) {
-    months -= 1;
-  }
-
-  // Advance start by the calculated month count
-  const temp = new Date(start);
-  temp.setMonth(temp.getMonth() + months);
-
-  const diff = end - temp;   // Get the remaining time difference
-
-  // Convert remaining time into days and hours
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-  countdown.textContent = `${months} Months ${days} Days ${hours} Hours until we say I do!`;
+        // Adjust for negative numbers, using borrowing logic to ensure readable calendar style display
+        if (minutes < 0) {
+            minutes += 60;
+            hours--; // "borrows" an hour if the minutes value is negative
+        }
+        if (hours < 0) {
+            hours += 24;
+            days--; // "borrows" a day if the hours value is negative
+        }
+        if (days < 0) {
+            // Calculate  number of days in the previous month
+            const lastMonthDate = new Date(now.getFullYear(), now.getMonth(), 0);
+            days += lastMonthDate.getDate();
+            months--; // "borrows" days from the previous month if the days value is negative
+        }
+        if (months < 0) {
+            months += 12;
+            years--; // "borrows" a year uf the months value is negative
+        }
+        countdown.textContent = `${months} Months ${days} Days ${hours} Hours ${minutes} Minutes until we say I do!`;
 }
 // Begin the countdown immediately and update every second
 setInterval(updateCountdown, 1000);
