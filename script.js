@@ -42,7 +42,7 @@ setInterval(rotateImages, 10000);
 //============================================================
 
 const countdown = document.getElementById('countdown'); // DOM element where countdown text will show
-const weddingDate = new Date('2026-01-17T13:30:00'); // Wedding date and start time
+const weddingDate = new Date('2026-01-17T15:30:00'); // Wedding date and start time
 
 // Updates the countdown every second and calculates the months, days, and hours remaining
 function updateCountdown() {
