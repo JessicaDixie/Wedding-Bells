@@ -21,7 +21,7 @@ function submitAdminPassword() {
   .then(data => {
     // If the password is correct, redirect to the admin panel. If incorrect, display an error message within the modal
     if (data.success) {
-      window.location.href = "./admin.html";
+      window.location.href = "https://jessicadixie.github.io/Wedding-Bells/admin.html";
     } else {
       document.getElementById("adminError").style.display = "block";
     }
