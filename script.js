@@ -1,4 +1,44 @@
 //============================================================
+// ADMIN LOGIC
+//============================================================
+
+// Opens the admin login modal when the user clicks the Admin link
+function openAdminLogin() {
+  document.getElementById("adminModal").style.display = "block";
+}
+
+// Handles the submission of the password
+function submitAdminPassword() {
+  const password = document.getElementById("adminPassword").value; //retrieve the entered password
+
+  // Send the password to the backend for verification
+  fetch("/api/admin-login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password }),
+  })
+  .then(res => res.json())
+  .then(data => {
+    // If the password is correct, redirect to the admin panel. If incorrect, display an error message within the modal
+    if (data.success) {
+      window.location.href = "/admin.html";
+    } else {
+      document.getElementById("adminError").style.display = "block";
+    }
+  });
+}
+
+// Close modal if user clicks outside
+window.onclick = function(event) {
+  const modal = document.getElementById("adminModal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+
+
+
+//============================================================
 // IMAGE GALLERY ROTATION
 //============================================================
 
