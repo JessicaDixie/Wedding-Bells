@@ -12,7 +12,7 @@ function submitAdminPassword() {
   const password = document.getElementById("adminPassword").value; //retrieve the entered password
 
   // Send the password to the backend for verification
-  fetch("/api/admin-login", {
+  fetch("https://wedding-bells-backend.onrender.com/api/admin-login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ password }),
@@ -35,7 +35,6 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 };
-
 
 
 //============================================================
