@@ -12,7 +12,7 @@ function submitAdminPassword() {
   const password = document.getElementById("adminPassword").value; //retrieve the entered password
 
   // Send the password to the backend for verification
-  fetch("https://wedding-bells-backend.onrender.com/api/admin-login", {
+  fetch('https://wedding-bells-backend.onrender.com/api/admin-login', {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ password }),
@@ -21,7 +21,7 @@ function submitAdminPassword() {
   .then(data => {
     // If the password is correct, redirect to the admin panel. If incorrect, display an error message within the modal
     if (data.success) {
-      window.location.href = "/admin.html";
+      window.location.href = "./admin.html";
     } else {
       document.getElementById("adminError").style.display = "block";
     }
