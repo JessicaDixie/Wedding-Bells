@@ -15,6 +15,7 @@ function submitAdminPassword() {
   fetch('https://wedding-bells-backend.onrender.com/api/admin-login', {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify({ password }),
   })
   .then(res => {
@@ -27,7 +28,7 @@ function submitAdminPassword() {
       return;
     }
 
-    // Successful login → load admin page from backend
+    // Successful login, load admin page from backend
     window.location.href = `https://wedding-bells-backend.onrender.com/admin`;
   });
 }
