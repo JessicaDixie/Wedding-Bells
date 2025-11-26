@@ -4,12 +4,7 @@ DLBCSPJWD01 Project
 🎉Inge & Mark’s Wedding Website — Frontend
 
 This repository contains the frontend for the wedding website of Inge and Mark.
-It is designed as a lightweight static site hosted on GitHub Pages, providing guests with essential wedding details such as:
-- Event itinerary
-- Live countdown
-- RSVP submission
-- Song suggestion feature
-- Additionally, for aesthetics, there is a photo gallery with a slideshow of the couple 
+It is designed as a lightweight static site hosted on GitHub Pages, providing guests with essential wedding details and the ability to submit their RSVPs and song suggestions.
 
 
 
@@ -25,15 +20,14 @@ The site is deployed via GitHub Pages and accessible at:
 Wedding-Bells/
 
     ├──images          # Gallery photos
-    ├──admin.css       # Styles for the admin page
-    ├──admin.html      # Admin page (loaded after password validation)
-    ├──admin.js        # Admin page logic (fetch RSVPs & songs)
     ├──index.html      # Main public wedding page
     ├──script.js       # Main frontend logic (Photo gallery, RSVP, songs, countdown)
     ├──styles.css      # Styles for the main site
     ├──README.md      
     ├──LICENSE   
     └──.gitignore
+    
+Note: The frontend doesn't contain any admin files (such as admin.html, admin.css, or admin.js). The admin dashboard is now served exclusively from the backend for security reasons.
 
 
 
@@ -41,7 +35,7 @@ Wedding-Bells/
 
 👰 Main Wedding Page (index.html)
 - Wedding invitation header
-- Admin section top right corner of the website
+- Admin Login modal (where the couple or developer can enter the admin password. The password is verified by the backend, which sets a secure authentication cookie)
   * Selecting it opens a password prompt. Upon successful authentication, the user is redirected to the admin page, which loads data from the backend via protected API requests.
   * Note: The admin password is configured in the backend and is not stored in or exposed by the frontend.
 - Three-image gallery with timed transitions
@@ -50,14 +44,6 @@ Wedding-Bells/
 - RSVP form (Name, Attending status, +1 option)
 - Song suggestion form (Song, Artist)
 - All submissions are sent to the backend (hosted separately on Render).
-
-
-🔐 Admin Page (admin.html)
-- Accessible only after entering the correct password.
-- Displays:
-  * Table of all RSVPs
-  * Table of all song suggestions
-
 
 
 🛠️ Installation & Usage (GitHub Pages)
@@ -92,9 +78,18 @@ Any changes pushed to main will automatically redeploy to GitHub Pages within a 
 
 
 📌 Important Notes
+- Backend integration
+  * The frontend communicates with the backend (hosted on Render) using HTTPS requests. All requests to admin endpoints must include:
+    
+            credentials: "include"
+    This allows the backend to verify the user's admin authentication cookie
 - This repository contains only the frontend.
+- No admin files are hosted in this repository.
 - The backend API (Node.js + Express + MongoDB) is hosted separately on Render.
-- API URLs inside script.js and admin.js must point to the Render backend.
+- The admin dashboard is protected on the backend using:
+  * A password check
+  * A secure, HTTP-only cookie
+  * A protected /admin route
 - Ensure CORS is properly configured on the backend for GitHub Pages.
 
 
