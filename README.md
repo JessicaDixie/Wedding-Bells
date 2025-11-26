@@ -83,6 +83,7 @@ Any changes pushed to main will automatically redeploy to GitHub Pages within a 
     
             credentials: "include"
     This allows the backend to verify the user's admin authentication cookie
+  * The backend is hosted on Render’s free tier, which may enter a sleep state when inactive. If the site appears unresponsive, allow a few seconds for the backend service to wake up before submitting RSVPs, song suggestions, or logging in to view the admin dashboard.
 - This repository contains only the frontend.
 - No admin files are hosted in this repository.
 - The backend API (Node.js + Express + MongoDB) is hosted separately on Render.
