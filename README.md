@@ -91,6 +91,8 @@ Any changes pushed to main will automatically redeploy to GitHub Pages within a 
   * A password check
   * A secure, HTTP-only cookie
   * A protected /admin route
+- Admin access for grading (optional):
+  * A temporary admin password can be provided privately upon request to the course instructor. For security reasons, the production admin password is not included in this repository.
 - Ensure CORS is properly configured on the backend for GitHub Pages.
 
 
