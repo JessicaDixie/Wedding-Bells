@@ -17,14 +17,18 @@ function submitAdminPassword() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ password }),
   })
-  .then(res => res.json())
+  .then(res => {
+    if (res.status === 401) return { success: false };
+    return res.json();
+  })
   .then(data => {
-    // If the password is correct, redirect to the admin panel. If incorrect, display an error message within the modal
-    if (data.success) {
-      window.location.href = "https://jessicadixie.github.io/Wedding-Bells/admin.html";
-    } else {
+    if (!data.success) {
       document.getElementById("adminError").style.display = "block";
+      return;
     }
+
+    // Successful login → load admin page from backend
+    window.location.href = `https://wedding-bells-backend.onrender.com/admin`;
   });
 }
 
@@ -202,3 +206,4 @@ document.getElementById("suggestionBtn").addEventListener("click", async () => {
     alert("There was a problem submitting your song suggestion. Please try again later.");
   }
 });
+
